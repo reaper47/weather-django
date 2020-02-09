@@ -68,7 +68,11 @@ class Main {
         () => this.refreshAtMidnightTimer();
 
         // Select last live graph
-        let index = this.getCookie('liveGraphSelected').split('=')[1];
+        try {
+            var index = this.getCookie('liveGraphSelected').split('=')[1];
+        } catch (e) {
+            var index = 0;
+        }
         this.liveChartSelect.selectedIndex = index === Number.MIN_VALUE ? 0 : index;
         this.liveCharts.changeChart(this.liveChartSelect.value, liveZoomButton)
 
