@@ -1,0 +1,4 @@
+temt600.c:6:6:TEMT600_Init	0	static
+temt600.c:13:6:TEMT600_Sample	16	static
+temt600.c:20:6:TEMT600_ToJson_Partial	0	static
+temt600.c:26:6:TEMT600_SetRawValue	0	static

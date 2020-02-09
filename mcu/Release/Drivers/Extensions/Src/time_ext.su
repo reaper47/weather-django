@@ -1,0 +1,2 @@
+time_ext.c:4:6:DWT_Init	0	static
+time_ext.c:16:6:DWT_DelayUs	8	static

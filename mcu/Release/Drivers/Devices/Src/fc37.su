@@ -1,0 +1,5 @@
+fc37.c:5:6:FC37_Init	0	static
+fc37.c:12:6:FC37_Sample	0	static
+fc37.c:25:6:FC37_ToJson_Partial	8	static
+fc37.c:32:6:_tochar_rain_intensity	0	static
+fc37.c:49:6:FC37_SetRawValue	0	static

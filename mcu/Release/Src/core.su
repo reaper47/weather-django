@@ -1,0 +1,4 @@
+core.c:16:6:start_sensors	32	static
+core.c:38:6:sample_and_post	96	static
+core.c:88:6:_average_raw_values	8	static
+core.c:95:10:_calculate_average	4	static

@@ -1,0 +1,15 @@
+esp8266.c:6:6:ESP8266_Init	56	static
+esp8266.c:23:6:ESP8266_UpdateWifiInfo	120	static
+esp8266.c:34:6:ESP8266_UpdateTcpInfo	80	static
+esp8266.c:45:9:ESP8266_Start	8	static
+esp8266.c:72:9:ESP8266_SendCmd	32	static
+esp8266.c:81:9:_AT_CheckResponse	24	static
+esp8266.c:96:6:_ESP8266_AnswerClear	8	static
+esp8266.c:103:9:ESP8266_SendData	40	static
+esp8266.c:123:9:_ESP8266_OpenTcpPort	8	static
+esp8266.c:138:9:_ESP8266_CheckWifiConnection	8	static
+esp8266.c:150:9:_AT_CommandError	24	static
+esp8266.c:157:6:ESP8266_ReceiveAnswer	8	static
+esp8266.c:169:6:NetworkInfo_Update	24	static
+esp8266.c:193:7:_connection_type_to_string	16	static
+esp8266.c:206:7:ESP8266_GetHost	4	static

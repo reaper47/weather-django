@@ -1,0 +1,10 @@
+dht.c:5:6:DHT_Init	16	static
+dht.c:16:6:DHT_ToPost	208	static
+dht.c:36:6:DHT_ToJson_Partial	96	static
+dht.c:52:6:DHT_Sample	40	static
+dht.c:88:6:_DHT_StartSignal	8	static
+dht.c:99:6:_DHT_IsResponseValid	16	static
+dht.c:111:6:_DHT_Read	24	static
+dht.c:125:6:_DHT_IsReadValid	24	static
+dht.c:132:6:_DHT_IsDht11	16	static
+dht.c:138:7:DHT_GetTemperature	16	static

@@ -1,0 +1,2 @@
+gpio_ext.c:4:6:GPIO_SetOutput	32	static
+gpio_ext.c:13:6:GPIO_SetInput	32	static
