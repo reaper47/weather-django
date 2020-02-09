@@ -1,0 +1,24 @@
+.sensor-data-container > p {
+  text-align: center;
+}
+
+.sensor-data {
+  margin-top: 1rem !important;
+  text-align: right;
+}
+
+#live-container {
+  display: flex;
+  height: 95vh;
+}
+
+#live-tile > article {
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0 !important;
+  height: 100%;
+}
+
+.fullscreen {
+  height: 100vh !important;
+}

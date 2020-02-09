@@ -1,0 +1,35 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "Your personal weather station dashboard.",
+  "main": "index.js",
+  "repository": "https://github.com/reaper47/weather.git",
+  "author": "Marc-André Charland",
+  "license": "MIT",
+  "scripts": {
+    "it": "yarn install && python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip && pip3 install --no-cache-dir -vvv -r requirements.txt",
+    "it-pkgs": "rm -rf ./node_modules && yarn install",
+    "build": "webpack --config webpack.config.js --progress --colors",
+    "build-watch": "webpack --config webpack.config.js --progress --colors --watch"
+  },
+  "dependencies": {
+    "bulma": "^0.8.0",
+    "bulma-switch": "^2.0.0",
+    "chart.js": "^2.9.3",
+    "deepmerge": "^4.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/polyfill": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "sass-loader": "^8.0.2",
+    "webpack": "^4.41.5",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.10"
+  }
+}

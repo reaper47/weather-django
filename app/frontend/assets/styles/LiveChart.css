@@ -1,0 +1,11 @@
+div[id$='__container'] {
+  position: relative;
+  margin: auto;
+  height: 92vh;
+  width: 80vw;
+  border-radius: 0;
+}
+
+.hide {
+  display: none;
+}
