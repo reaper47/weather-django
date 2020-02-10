@@ -1,5 +1,5 @@
 html {
-  overflow: hidden !important;
+  overflow-y: hidden !important;
 }
 
 .no-padding {
@@ -24,4 +24,10 @@ select {
 
 .tile.is-ancestor {
   margin-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+  html {
+    overflow-y: auto !important;
+  }
 }

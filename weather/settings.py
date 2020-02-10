@@ -93,7 +93,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'weather.wsgi.application'
 
-ASGI_APPLICATION = 'weather.asgi.application'
+ASGI_APPLICATION = 'weather.routing.application'
 
 
 # Database

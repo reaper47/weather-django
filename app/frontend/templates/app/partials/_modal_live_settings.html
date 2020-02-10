@@ -8,7 +8,7 @@
       <button class="delete" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-hidden-mobile">
         <thead>
           <tr>
             <th>Live Tile</th>
@@ -54,9 +54,9 @@
             <td>
               <div class="field">
                 <select id="pressure-unit">
-                {% for val, label in pressure_units %}
+                  {% for val, label in pressure_units %}
                   <option value="{{ val }}">{{ label }}</option>
-                {% endfor %}
+                  {% endfor %}
                 </select>
                 <label for="pressure-unit"></label>
               </div>
@@ -67,9 +67,9 @@
             <td>
               <div class="field">
                 <select id="wind-unit">
-                {% for val, label in wind_units %}
+                  {% for val, label in wind_units %}
                   <option value="{{ val }}">{{ label }}</option>
-                {% endfor %}
+                  {% endfor %}
                 </select>
                 <label for="wind-unit"></label>
               </div>
@@ -77,7 +77,7 @@
           </tr>
         </tbody>
       </table>
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth section">
         <thead>
           <tr>
             <th>Other</th>

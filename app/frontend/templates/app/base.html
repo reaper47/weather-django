@@ -3,80 +3,83 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <meta name="description" content="View the local weather in Quebec City">
-    <meta property="og:title" content="MacWeather">
-    <meta property="og:image" content="https://developer.cdn.mozilla.net/static/img/opengraph-logo.dc4e08e2f6af.png">
-    <meta property="og:description" content="View the local weather in Quebec City">
-    <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
-    {% if title %}<title>{{ title }} - MacWeather</title>{% else %}<title>MacWeather</title>{% endif %}
-    <link rel="stylesheet" href="{% static 'bundles/main.css' %}">
-  </head>
-  <body>
-    {% spaceless %}
-    <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="View the local weather in Quebec City">
+  <meta property="og:title" content="MacWeather">
+  <meta property="og:image" content="https://developer.cdn.mozilla.net/static/img/opengraph-logo.dc4e08e2f6af.png">
+  <meta property="og:description" content="View the local weather in Quebec City">
+  <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+  {% if title %}<title>{{ title }} - MacWeather</title>{% else %}<title>MacWeather</title>{% endif %}
+  <link rel="stylesheet" href="{% static 'bundles/main.css' %}">
+</head>
+
+<body>
+  {% spaceless %}
+  <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <div class="navbar-item is-hidden-mobile">
+          <select id="live-chart-select">
+            <option value="{{ graphs.0 }}" selected="selected">{{ graphs.0|title }}</option>
+            {% for x in graphs|slice:"1:" %}
+            {% if not x %}
+            <option disabled>───────────────────</option>
+            {% else %}
+            <option value="{{ x }}">
+              {% if 'heat' in x %}{{ x|heat_index_found }}{% else %}{{ x|heat_index_not_found }}{% endif %}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div id="live-sensors-temperature" class="navbar-item is-hidden-mobile">
+          <select>
+            {% for x in temperature_sensors %}
+            <option value="{{ x|lower }}">{{ x }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="live-sensors-humidity" class="navbar-item hide is-hidden-mobile">
+          <select>
+            <option value="dht22">DHT22</option>
+            <option value="bme280">BME280</option>
+          </select>
+        </div>
+        <div class="navbar-item is-hidden-mobile">
+          <a id="live-zoom-button" class="button">Zoom</a>
+        </div>
+      </div>
+      <div class="navbar-end ">
+        <a id="live-settings-cog" class="navbar-item modal-button is-hidden-mobile" data-target="modal-live-settings">
+          <span class="icon">
+            <i class="fas fa-cog"></i>
+          </span>
         </a>
+        <a class="navbar-item" href="{% url 'app:live.index' %}">Live</a>
+        <a class="navbar-item" href="{% url 'app:live.index' %}">History</a>
+        <a class="navbar-item" href="{% url 'app:live.index' %}">Predictions</a>
       </div>
-      <div id="navbarMenu" class="navbar-menu">
-        <div class="navbar-start">
-          <div class="navbar-item">
-            <select id="live-chart-select">
-              <option value="{{ graphs.0 }}" selected="selected">{{ graphs.0|title }}</option>
-              {% for x in graphs|slice:"1:" %}
-              {% if not x %}
-              <option disabled>───────────────────</option>
-              {% else %}
-              <option value="{{ x }}">{% if 'heat' in x %}{{ x|heat_index_found }}{% else %}{{ x|heat_index_not_found }}{% endif %}</option>
-              {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-          <div id="live-sensors-temperature" class="navbar-item">
-            <select>
-              {% for x in temperature_sensors %}
-              <option value="{{ x|lower }}">{{ x }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div id="live-sensors-humidity" class="navbar-item hide">
-            <select>
-              <option value="dht22">DHT22</option>
-              <option value="bme280">BME280</option>
-            </select>
-          </div>
-          <div class="navbar-item">
-            <a id="live-zoom-button" class="button">Zoom</a>
-          </div>
-        </div>
-        <div class="navbar-end">
-          <a id="live-settings-cog" class="navbar-item modal-button" data-target="modal-live-settings">
-            <span class="icon">
-              <i class="fas fa-cog"></i>
-            </span>
-          </a>
-          <a class="navbar-item" href="{% url 'app:live.index' %}">Live</a>
-          <a class="navbar-item" href="{% url 'app:live.index' %}">History</a>
-          <a class="navbar-item" href="{% url 'app:live.index' %}">Predictions</a>
-        </div>
-      </div>
-    </nav>
+    </div>
+  </nav>
+  {% endspaceless %}
+  <main>
+    {% spaceless %}
+    {% block page_content %}{% endblock %}
     {% endspaceless %}
-    <main>
-      {% spaceless %}
-      {% block page_content %}{% endblock %}
-      {% endspaceless %}
-    </main>
-    <script defer src="{% static 'bundles/main.js' %}"></script>
-    <script>
+  </main>
+  <script defer src="{% static 'bundles/main.js' %}"></script>
+  <script>
     var liveSocket = new WebSocket(`ws://${window.location.host}/ws/app/`);
     liveSocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
@@ -85,6 +88,7 @@
       else if (message.type === 'update_graph_event')
         main.liveCharts.updateGraph(message.data);
     }
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

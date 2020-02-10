@@ -15,7 +15,7 @@
     <div id="live-graph" class="tile is-parent is-10 no-padding">
       <article class="tile is-child notification is-dark">
         {% for x in graph_ids %}
-        <div id="live-chart-{{ x }}__container" {% if loop.index > 1 %}class="hide"{% endif %}>
+        <div id="live-chart-{{ x }}__container" {% if forloop.counter > 1 %}class="hide" {% endif %}>
           <canvas id="live-chart-{{ x }}"></canvas>
         </div>
         {% endfor %}
@@ -23,8 +23,91 @@
     </div>
   </div>
 </section>
-<section class="section is-hidden-tablet">
-  Hello
+<section id="live-mobile-section" class="is-hidden-tablet">
+  <div id="live-tabs" class="tabs is-toggle is-fullwidth">
+    <ul>
+      <li class="is-active" data-tab="1">
+        <a>
+          <span class="icon is-small"><i class="fas fa-thermometer-half" aria-hidden="true"></i></span>
+          <span>Tiles</span>
+        </a>
+      </li>
+      <li data-tab="2">
+        <a>
+          <span class="icon is-small"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+          <span>Graphs</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div id="live-tab-content">
+    <aside id="live-tile-mobile" class="is-active" data-content="1">
+      {% for x in live_tiles %}
+      <article id="live-container-{{ x|adjust_live_tile_id }}-mobile"
+        class="notification {{ x.0 }} sensor-data-container">
+        <p id="live-{{ x|adjust_live_tile_id }}-mobile" class="title sensor-data">N/A</p>
+        <p class="title is-4">{{ x.1 }}</p>
+      </article>
+      {% endfor %}
+      <div id="cog-grid-mobile">
+        <a id="live-settings-cog-graph-mobile" class="navbar-item modal-button is-fullwidth"
+          data-target="modal-live-settings">
+          <span class="icon">
+            <i class="fas fa-cog"></i>
+          </span>
+        </a>
+      </div>
+    </aside>
+    <aside data-content="2">
+      <div id="live-graph-mobile">
+        <article class="notification is-dark">
+          {% for x in graph_ids %}
+          <div id="live-chart-{{ x }}-mobile__container" {% if forloop.counter > 1 %}class="hide" {% endif %}>
+            <canvas id="live-chart-{{ x }}-mobile"></canvas>
+          </div>
+          {% endfor %}
+        </article>
+      </div>
+      <div id="options-graph-mobile">
+        <div class="navbar-item">
+          <select id="live-chart-select-mobile">
+            <option value="{{ graphs.0 }}" selected="selected">{{ graphs.0|title }}</option>
+            {% for x in graphs|slice:"1:" %}
+            {% if not x %}
+            <option disabled>───────────────────</option>
+            {% else %}
+            <option value="{{ x }}">
+              {% if 'heat' in x %}{{ x|heat_index_found }}{% else %}{{ x|heat_index_not_found }}{% endif %}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div id="live-sensors-temperature-mobile" class="navbar-item">
+          <select>
+            {% for x in temperature_sensors %}
+            <option value="{{ x|lower }}">{{ x }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="i-mobile" class="navbar-item hide">
+          <select>
+            <option value="dht22">DHT22</option>
+            <option value="bme280">BME280</option>
+          </select>
+        </div>
+        <div class="navbar-item">
+          <a id="live-zoom-button-mobile" class="button is-small is-fullwidth">Zoom</a>
+        </div>
+        <div>
+          <a id="live-settings-cog-graph-mobile" class="navbar-item modal-button" data-target="modal-live-settings">
+            <span class="icon">
+              <i class="fas fa-cog"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
 </section>
 {% include 'partials/_modal_live_settings.html' %}
 <script defer>document.addEventListener('DOMContentLoaded', () => main.initLive({{ samples|tojson }}))</script>

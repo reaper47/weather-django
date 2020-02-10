@@ -26,28 +26,94 @@ import { PressureUnitsEnum, WindUnitsEnum } from './main'
 class LiveCharts {
     constructor(data, liveTiles) {
         this.charts = {
-            'T': new LiveChart_T('live-chart-temperature', data.dates, data.Averages.T_C),
-            'HI': new LiveChart_HI('live-chart-heat-index', data.dates, data.DHT.HI_C),
-            'RH': new LiveChart_RH('live-chart-humidity', data.dates, data.DHT.RH),
-            'Rain': new LiveChart_Rain('live-chart-rain', data.dates, data.FC37.Rain),
-            'Light': new LiveChart_Light('live-chart-light', data.dates, data.TEMT6000.Light),
-            'P': new LiveChart_P('live-chart-pressure', data.dates, data.BME280.P),
-            'T_HI': new LiveChart_T_HI('live-chart-temperature-heat-index', data.dates, data.Averages.T_C, data.DHT.HI_C),
-            'T_RH': new LiveChart_T_RH('live-chart-temperature-humidity', data.dates, data.Averages.T_C, data.DHT.RH),
-            'T_Rain': new LiveChart_T_Rain('live-chart-temperature-rain', data.dates, data.Averages.T_C, data.FC37.Rain),
-            'T_Light': new LiveChart_T_Light('live-chart-temperature-light', data.dates, data.Averages.T_C, data.TEMT6000.Light),
-            'T_P': new LiveChart_T_P('live-chart-temperature-pressure', data.dates, data.Averages.T_C, data.BME280.P),
-            'HI_RH': new LiveChart_HI_RH('live-chart-heat-index-humidity', data.dates, data.DHT.HI_C, data.DHT.RH),
-            'HI_Rain': new LiveChart_HI_Rain('live-chart-heat-index-rain', data.dates, data.DHT.HI_C, data.FC37.Rain),
-            'HI_Light': new LiveChart_HI_Light('live-chart-heat-index-light', data.dates, data.DHT.HI_C, data.TEMT6000.Light),
-            'HI_P': new LiveChart_HI_P('live-chart-heat-index-pressure', data.dates, data.DHT.HI_C, data.BME280.P),
-            'Rain_RH': new LiveChart_Rain_RH('live-chart-rain-humidity', data.dates, data.FC37.Rain, data.DHT.RH),
-            'Rain_Light': new LiveChart_Rain_Light('live-chart-rain-light', data.dates, data.FC37.Rain, data.TEMT6000.Light),
-            'Light_RH': new LiveChart_Light_RH('live-chart-light-humidity', data.dates, data.TEMT6000.Light, data.DHT.RH),
-            'P_RH': new LiveChart_P_RH('live-chart-pressure-humidity', data.dates, data.BME280.P, data.DHT.RH),
-            'P_Rain': new LiveChart_P_Rain('live-chart-pressure-rain', data.dates, data.BME280.P, data.FC37.Rain),
-            'P_Light': new LiveChart_P_Light('live-chart-pressure-light', data.dates, data.BME280.P, data.TEMT6000.Light),
-            'W': new LiveChart_W('live-chart-wind', data.dates, data.Wind.ms),
+            'T': [
+                new LiveChart_T('live-chart-temperature', data.dates, data.Averages.T_C),
+                new LiveChart_T('live-chart-temperature-mobile', data.dates, data.Averages.T_C)
+            ],
+            'HI': [
+                new LiveChart_HI('live-chart-heat-index', data.dates, data.DHT.HI_C),
+                new LiveChart_HI('live-chart-heat-index-mobile', data.dates, data.DHT.HI_C)
+            ],
+            'RH': [
+                new LiveChart_RH('live-chart-humidity', data.dates, data.DHT.RH),
+                new LiveChart_RH('live-chart-humidity-mobile', data.dates, data.DHT.RH)
+            ],
+            'Rain': [
+                new LiveChart_Rain('live-chart-rain', data.dates, data.FC37.Rain),
+                new LiveChart_Rain('live-chart-rain-mobile', data.dates, data.FC37.Rain)
+            ],
+            'Light': [
+                new LiveChart_Light('live-chart-light', data.dates, data.TEMT6000.Light),
+                new LiveChart_Light('live-chart-light-mobile', data.dates, data.TEMT6000.Light)
+            ],
+            'P': [
+                new LiveChart_P('live-chart-pressure', data.dates, data.BME280.P),
+                new LiveChart_P('live-chart-pressure-mobile', data.dates, data.BME280.P)
+            ],
+            'T_HI': [
+                new LiveChart_T_HI('live-chart-temperature-heat-index', data.dates, data.Averages.T_C, data.DHT.HI_C),
+                new LiveChart_T_HI('live-chart-temperature-heat-index-mobile', data.dates, data.Averages.T_C, data.DHT.HI_C)
+            ],
+            'T_RH': [
+                new LiveChart_T_RH('live-chart-temperature-humidity', data.dates, data.Averages.T_C, data.DHT.RH),
+                new LiveChart_T_RH('live-chart-temperature-humidity-mobile', data.dates, data.Averages.T_C, data.DHT.RH)
+            ],
+            'T_Rain': [
+                new LiveChart_T_Rain('live-chart-temperature-rain', data.dates, data.Averages.T_C, data.FC37.Rain),
+                new LiveChart_T_Rain('live-chart-temperature-rain-mobile', data.dates, data.Averages.T_C, data.FC37.Rain)
+            ],
+            'T_Light': [
+                new LiveChart_T_Light('live-chart-temperature-light', data.dates, data.Averages.T_C, data.TEMT6000.Light),
+                new LiveChart_T_Light('live-chart-temperature-light-mobile', data.dates, data.Averages.T_C, data.TEMT6000.Light)
+            ],
+            'T_P': [
+                new LiveChart_T_P('live-chart-temperature-pressure', data.dates, data.Averages.T_C, data.BME280.P),
+                new LiveChart_T_P('live-chart-temperature-pressure-mobile', data.dates, data.Averages.T_C, data.BME280.P)
+            ],
+            'HI_RH': [
+                new LiveChart_HI_RH('live-chart-heat-index-humidity', data.dates, data.DHT.HI_C, data.DHT.RH),
+                new LiveChart_HI_RH('live-chart-heat-index-humidity-mobile', data.dates, data.DHT.HI_C, data.DHT.RH)
+            ],
+            'HI_Rain': [
+                new LiveChart_HI_Rain('live-chart-heat-index-rain', data.dates, data.DHT.HI_C, data.FC37.Rain),
+                new LiveChart_HI_Rain('live-chart-heat-index-rain-mobile', data.dates, data.DHT.HI_C, data.FC37.Rain)
+            ],
+            'HI_Light': [
+                new LiveChart_HI_Light('live-chart-heat-index-light', data.dates, data.DHT.HI_C, data.TEMT6000.Light),
+                new LiveChart_HI_Light('live-chart-heat-index-light-mobile', data.dates, data.DHT.HI_C, data.TEMT6000.Light)
+            ],
+            'HI_P': [
+                new LiveChart_HI_P('live-chart-heat-index-pressure', data.dates, data.DHT.HI_C, data.BME280.P),
+                new LiveChart_HI_P('live-chart-heat-index-pressure-mobile', data.dates, data.DHT.HI_C, data.BME280.P)
+            ],
+            'Rain_RH': [
+                new LiveChart_Rain_RH('live-chart-rain-humidity', data.dates, data.FC37.Rain, data.DHT.RH),
+                new LiveChart_Rain_RH('live-chart-rain-humidity-mobile', data.dates, data.FC37.Rain, data.DHT.RH)
+            ],
+            'Rain_Light': [
+                new LiveChart_Rain_Light('live-chart-rain-light', data.dates, data.FC37.Rain, data.TEMT6000.Light),
+                new LiveChart_Rain_Light('live-chart-rain-light-mobile', data.dates, data.FC37.Rain, data.TEMT6000.Light)
+            ],
+            'Light_RH': [
+                new LiveChart_Light_RH('live-chart-light-humidity', data.dates, data.TEMT6000.Light, data.DHT.RH),
+                new LiveChart_Light_RH('live-chart-light-humidity-mobile', data.dates, data.TEMT6000.Light, data.DHT.RH)
+            ],
+            'P_RH': [
+                new LiveChart_P_RH('live-chart-pressure-humidity', data.dates, data.BME280.P, data.DHT.RH),
+                new LiveChart_P_RH('live-chart-pressure-humidity-mobile', data.dates, data.BME280.P, data.DHT.RH)
+            ],
+            'P_Rain': [
+                new LiveChart_P_Rain('live-chart-pressure-rain', data.dates, data.BME280.P, data.FC37.Rain),
+                new LiveChart_P_Rain('live-chart-pressure-rain-mobile', data.dates, data.BME280.P, data.FC37.Rain)
+            ],
+            'P_Light': [
+                new LiveChart_P_Light('live-chart-pressure-light', data.dates, data.BME280.P, data.TEMT6000.Light),
+                new LiveChart_P_Light('live-chart-pressure-light-mobile', data.dates, data.BME280.P, data.TEMT6000.Light)
+            ],
+            'W': [
+                new LiveChart_W('live-chart-wind', data.dates, data.Wind.ms),
+                new LiveChart_W('live-chart-wind-mobile', data.dates, data.Wind.ms)
+            ],
         };
 
         this.data = data;
@@ -89,19 +155,19 @@ class LiveCharts {
     }
 
     create() {
-        Object.keys(this.charts).forEach(k => this.charts[k].create());
+        Object.keys(this.charts).forEach(k => this.charts[k].forEach(x => x.create()));
     }
 
-    changeChart(chart, zoomButton) {
+    changeChart(chart, zoomButtons) {
         this.currentChart = this.chartLookupTable[chart];
 
         Object.keys(this.charts).forEach(k => {
-            zoomButton.textContent = 'Zoom';
-            this.charts[k].unzoom();
-            this.charts[k].hide();
+            zoomButtons.forEach(x => x.textContent = 'Zoom');
+            this.charts[k].forEach(x => x.unzoom());
+            this.charts[k].forEach(x => x.hide());
         });
 
-        this.currentChart.show();
+        this.currentChart.forEach(x => x.show());
         this.toggleSensorSelect(chart);
     }
 
@@ -129,17 +195,17 @@ class LiveCharts {
 
         if (sensor.includes('dht22')) {
             const temperatures = this.isCelsius ? this.data.DHT.T_C : this.data.DHT.T_F;
-            charts.forEach(chart => this.charts[chart].changeDataset(temperatures));
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(temperatures)));
         } else if (sensor.includes('ds18b20')) {
             const temperatures = this.isCelsius ? this.data.DS18B20.T_C : this.data.DS18B20.T_F;
-            charts.forEach(chart => this.charts[chart].changeDataset(temperatures));
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(temperatures)));
         } else if (sensor.includes('bme280')) {
             const temperatures = this.isCelsius ? this.data.BME280.T_C : this.data.BME280.T_F;
-            charts.forEach(chart => this.charts[chart].changeDataset(temperatures));
-            this.charts['T_HI'].changeDataset(temperatures);
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(temperatures)));
+            this.charts['T_HI'].forEach(x => x.changeDataset(temperatures));
         } else {
             const temperatures = this.isCelsius ? this.data.Averages.T_C : this.data.Averages.T_F;
-            charts.forEach(chart => this.charts[chart].changeDataset(temperatures));
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(temperatures)));
         }
     }
 
@@ -147,11 +213,11 @@ class LiveCharts {
         const charts = ['Rain_RH', 'Light_RH', 'P_RH', 'T_HI', 'T_RH', 'HI_RH'];
 
         if (sensor.includes('dht')) {
-            this.charts['RH'].changeDataset(this.data.DHT.RH);
-            charts.forEach(chart => this.charts[chart].changeDataset(null, this.data.DHT.RH));
+            this.charts['RH'].forEach(x => x.changeDataset(this.data.DHT.RH));
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(null, this.data.DHT.RH)));
         } else if (sensor.includes('bme')) {
-            this.charts['RH'].changeDataset(this.data.BME280.RH);
-            charts.forEach(chart => this.charts[chart].changeDataset(null, this.data.BME280.RH));
+            this.charts['RH'].forEach(x => x.changeDataset(this.data.BME280.RH));
+            charts.forEach(chart => this.charts[chart].forEach(x => x.changeDataset(null, this.data.BME280.RH)));
         }
     }
 
@@ -251,9 +317,9 @@ class LiveCharts {
     updateLive(new_sample) {
         this.sample = new_sample;
         this.updateLiveTemperature();
-        this.liveTiles['RH'].textContent = `${this.sample.DHT.RH}%`;
-        this.liveTiles['Light'].textContent = `${this.sample.TEMT6000.lux}`;
-        this.liveTiles['Rain'].textContent = `${this.labelRain(this.sample.FC37.rain)}`;
+        this.liveTiles['RH'].forEach(x => x.textContent = `${this.sample.DHT.RH}%`);
+        this.liveTiles['Light'].forEach(x => x.textContent = `${this.sample.TEMT6000.lux}`);
+        this.liveTiles['Rain'].forEach(x => x.textContent = `${this.labelRain(this.sample.FC37.rain)}`);
         this.updateLiveWind();
         this.updateLivePressure();
 
@@ -276,30 +342,30 @@ class LiveCharts {
 
     updateLiveTemperature() {
         if (this.isCelsius) {
-            this.liveTiles['T'].textContent = `${this.sample.T.C}°C`;
-            this.liveTiles['HI'].textContent = `${this.sample.DHT.HI_C}°C`;
+            this.liveTiles['T'].forEach(x => x.textContent = `${this.sample.T.C}°C`);
+            this.liveTiles['HI'].forEach(x => x.textContent = `${this.sample.DHT.HI_C}°C`);
         } else {
-            this.liveTiles['T'].textContent = `${this.sample.T.F}°F`;
-            this.liveTiles['HI'].textContent = `${this.sample.DHT.HI_F}°F`;
+            this.liveTiles['T'].forEach(x => x.textContent = `${this.sample.T.F}°F`);
+            this.liveTiles['HI'].forEach(x => x.textContent = `${this.sample.DHT.HI_F}°F`);
         }
     }
 
     updateLivePressure() {
         if (this.pressureUnit === PressureUnitsEnum.pascal)
-            this.liveTiles['P'].textContent = `${this.numberWithCommas(this.sample.BME280.P.toFixed(0))}` + ' Pa';
+            this.liveTiles['P'].forEach(x => x.textContent = `${this.numberWithCommas(this.sample.BME280.P.toFixed(0))}` + ' Pa');
         else if (this.pressureUnit === PressureUnitsEnum.kilopascal)
-            this.liveTiles['P'].textContent = `${this.sample.BME280.P_kPa}` + ' kPa';
+            this.liveTiles['P'].forEach(x => x.textContent = `${this.sample.BME280.P_kPa}` + ' kPa');
         else
-            this.liveTiles['P'].textContent = `${this.sample.BME280.P_mb}` + ' mbar';
+            this.liveTiles['P'].forEach(x => x.textContent = `${this.sample.BME280.P_mb}` + ' mbar');
     }
 
     updateLiveWind() {
         if (this.windUnit === WindUnitsEnum.ms)
-            this.liveTiles['Wind'].textContent = `${this.numberWithCommas(this.sample.Wind.ms)}` + ' m/s';
+            this.liveTiles['Wind'].forEach(x => x.textContent = `${this.numberWithCommas(this.sample.Wind.ms)}` + ' m/s');
         else if (this.windUnit === WindUnitsEnum.kmph)
-            this.liveTiles['Wind'].textContent = `${this.sample.Wind.kmph}` + ' km/h';
+            this.liveTiles['Wind'].forEach(x => x.textContent = `${this.sample.Wind.kmph}` + ' km/h');
         else
-            this.liveTiles['Wind'].textContent = `${this.sample.Wind.mph}` + ' mph';
+            this.liveTiles['Wind'].forEach(x => x.textContent = `${this.sample.Wind.mph}` + ' mph');
     }
 
     updateTemperatureUnit(isCelsius) {
@@ -310,12 +376,12 @@ class LiveCharts {
 
         const chartsT = ['T', 'T_RH', 'T_Rain', 'T_Light', 'T_P'];
         const samples = isCelsius ? this.data.Averages.T_C : this.data.Averages.T_F;
-        chartsT.forEach(chart => this.charts[chart].changeTemperatureUnit(samples, 'Temperature ', isCelsius));
+        chartsT.forEach(chart => this.charts[chart].forEach(x => x.changeTemperatureUnit(samples, 'Temperature ', isCelsius)));
 
         const chartsHI = ['HI', 'HI_RH', 'HI_Rain', 'HI_Light', 'HI_P']
         const heatIndexSamples = isCelsius ? this.data.DHT.HI_C : this.data.DHT.HI_F;
-        chartsHI.forEach(chart => this.charts[chart].changeTemperatureUnit(heatIndexSamples, 'Heat Index ', isCelsius));
-        this.charts['T_HI'].changeTemperatureUnit(samples, heatIndexSamples, isCelsius);
+        chartsHI.forEach(chart => this.charts[chart].forEach(x => x.changeTemperatureUnit(heatIndexSamples, 'Heat Index ', isCelsius)));
+        this.charts['T_HI'].forEach(x => x.changeTemperatureUnit(samples, heatIndexSamples, isCelsius));
     }
 
     updatePressureUnit(unit) {
@@ -338,10 +404,10 @@ class LiveCharts {
         }
 
         const charts1 = ['P', 'P_RH', 'P_Light', 'P_Rain'];
-        charts1.forEach(chart => this.charts[chart].changePressureUnit(samples, true, newlabel, unit));
+        charts1.forEach(chart => this.charts[chart].forEach(x => x.changePressureUnit(samples, true, newlabel)));
 
         const charts2 = ['T_P', 'HI_P'];
-        charts2.forEach(chart => this.charts[chart].changePressureUnit(samples, false, newlabel, unit));
+        charts2.forEach(chart => this.charts[chart].forEach(x => x.changePressureUnit(samples, false, newlabel)));
     }
 
     updateWindUnit(unit) {
@@ -365,16 +431,16 @@ class LiveCharts {
         }
 
         const charts1 = ['W'];
-        charts1.forEach(chart => this.charts[chart].changeWindUnit(samples, true, newlabel, unit));
+        charts1.forEach(chart => this.charts[chart].forEach(x => x.changeWindUnit(samples, true, newlabel)));
     }
 
     zoomChart(zoomButton) {
         if (zoomButton.textContent.localeCompare('Zoom') == 0) {
             zoomButton.textContent = 'Unzoom';
-            this.currentChart.zoom();
+            this.currentChart.forEach(x => x.zoom());
         } else {
             zoomButton.textContent = 'Zoom';
-            this.currentChart.unzoom();
+            this.currentChart.forEach(x => x.unzoom());
         }
     }
 }

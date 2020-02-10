@@ -102,7 +102,7 @@ class LiveChart {
     this.chart.update();
   }
 
-  changePressureUnit(samples, isy1, newlabel, unit) {
+  changePressureUnit(samples, isy1, newlabel) {
     const i = isy1 ? 0 : 1;
 
     this.__config.data.datasets[i].data = samples;
@@ -125,7 +125,7 @@ class LiveChart {
     this.chart.update();
   }
 
-  changeWindUnit(samples, isy1, newlabel, unit) {
+  changeWindUnit(samples, isy1, newlabel) {
     const i = isy1 ? 0 : 1;
     this.__config.data.datasets[i].data = samples;
     this.__config.options.scales.yAxes[i].scaleLabel.labelString = newlabel;

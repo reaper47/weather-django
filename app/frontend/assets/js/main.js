@@ -1,4 +1,5 @@
 import initModals from './modals'
+import initTabs from './tabs'
 
 const PressureUnitsEnum = Object.freeze({ 'pascal': 0, 'kilopascal': 1, 'mbar': 2 });
 const WindUnitsEnum = Object.freeze({ 'ms': 0, 'kmph': 1, 'mph': 2 });
@@ -13,6 +14,7 @@ class Main {
         this.liveCharts = null;
 
         initModals();
+        initTabs();
     }
 
     __activateBurgers() {
@@ -30,13 +32,13 @@ class Main {
         samples['dates'] = samples['dates'].map(x => new Date(x));
 
         const liveTiles = {
-            'T': document.getElementById('live-temperature'),
-            'HI': document.getElementById('live-heat-index'),
-            'RH': document.getElementById('live-humidity'),
-            'Light': document.getElementById('live-lux'),
-            'Rain': document.getElementById('live-rain'),
-            'P': document.getElementById('live-pressure'),
-            'Wind': document.getElementById('live-wind')
+            'T': document.querySelectorAll('[id^="live-temperature"]'),
+            'HI': document.querySelectorAll('[id^="live-heat-index"]'),
+            'RH': document.querySelectorAll('[id^="live-humidity"]'),
+            'Light': document.querySelectorAll('[id^="live-lux"]'),
+            'Rain': document.querySelectorAll('[id^="live-rain"]'),
+            'P': document.querySelectorAll('[id^="live-pressure"]'),
+            'Wind': document.querySelectorAll('[id^="live-wind"]'),
         }
 
         this.liveCharts = new LiveCharts(samples, liveTiles);
@@ -46,22 +48,22 @@ class Main {
         this.liveContainer = document.getElementById('live-container');
         this.liveFullScreenInput = document.getElementById('live-fullscreen');
 
-        const liveSensorsTemperatureSelect = document.getElementById('live-sensors-temperature').firstElementChild;
-        liveSensorsTemperatureSelect.addEventListener('change', opt => this.liveCharts.changeSensorT(opt.target.value));
+        let liveSensorsTemperatureSelect = Array.from(document.querySelectorAll('[id^="live-sensors-temperature"]')).map(x => x.children[0]);
+        liveSensorsTemperatureSelect.forEach(x => x.addEventListener('change', opt => this.liveCharts.changeSensorT(opt.target.value)));
 
-        const liveSensorsHumiditySelect = document.getElementById('live-sensors-humidity').firstElementChild;
-        liveSensorsTemperatureSelect.selectedIndex = 0;
-        liveSensorsHumiditySelect.addEventListener('change', opt => this.liveCharts.changeSensorRH(opt.target.value));
+        let liveSensorsHumiditySelect = Array.from(document.querySelectorAll('[id^="live-sensors-humidity"]')).map(x => x.children[0]);
+        liveSensorsTemperatureSelect.forEach(x => x.selectedIndex = 0);
+        liveSensorsHumiditySelect.forEach(x => x.addEventListener('change', opt => this.liveCharts.changeSensorRH(opt.target.value)));
 
-        const liveZoomButton = document.getElementById('live-zoom-button');
+        const liveZoomButtons = document.querySelectorAll('[id^="live-zoom-button"]');
         liveSensorsHumiditySelect.selectedIndex = 0;
-        liveZoomButton.addEventListener('mousedown', click => this.liveCharts.zoomChart(click.target));
+        liveZoomButtons.forEach(x => x.addEventListener('mousedown', click => this.liveCharts.zoomChart(click.target)));
 
-        this.liveChartSelect = document.getElementById('live-chart-select');
-        this.liveChartSelect.addEventListener('change', opt => {
-            this.liveCharts.changeChart(opt.target.value, liveZoomButton);
+        this.liveChartSelects = document.querySelectorAll('[id^="live-chart-select"]');
+        this.liveChartSelects.forEach(x => x.addEventListener('change', opt => {
+            this.liveCharts.changeChart(opt.target.value, liveZoomButtons);
             this.saveSelectedLiveGraph();
-        });
+        }));
         this.liveFullScreenInput.addEventListener('change', () => this.liveFullScreen());
 
         this.liveGraphKeysListener();
@@ -73,8 +75,9 @@ class Main {
         } catch (e) {
             var index = 0;
         }
-        this.liveChartSelect.selectedIndex = index === Number.MIN_VALUE ? 0 : index;
-        this.liveCharts.changeChart(this.liveChartSelect.value, liveZoomButton)
+
+        this.liveChartSelects.forEach(x => x.selectedIndex = index === Number.MIN_VALUE ? 0 : index);
+        this.liveCharts.changeChart(this.liveChartSelects[0].value, liveZoomButtons)
 
         // Load Settings
         this.loadLiveSettings();
@@ -146,20 +149,22 @@ class Main {
 
     updateLiveTiles(tiles) {
         const json = JSON.parse(window.localStorage.getItem(this.liveJson));
-        const containers = tiles.map(el => document.getElementById(`live-container-${el}`));
+        const containers = tiles.map(el => document.querySelectorAll(`[id^="live-container-${el}"]`));
 
         for (let key in json) {
             const i = tiles.indexOf(key);
-            if (json[key])
-                containers[i].classList.remove('hide');
-            else
-                containers[i].classList.add('hide');
+            if (json[key]) {
+                containers[i].forEach(x => x.classList.remove('hide'));
+            } else {
+                containers[i].forEach(x => x.classList.add('hide'));
+            }
         }
 
         // Adjust Graph
-        const liveTile = document.getElementById('live-tile')
-        const liveGraph = document.getElementById('live-graph');
-        const charts = Array.from(liveGraph.children[0].children);
+        const liveTile = document.querySelectorAll('[id^="live-tile"]');
+        const liveGraph = document.querySelectorAll('[id^="live-graph"]');
+        const charts = Array.from(liveGraph[0].children[0].children);
+        const chartsMobile = Array.from(liveGraph[1].children[0].children);
 
         let areTilesPresent = false;
         for (let key in json) {
@@ -170,15 +175,17 @@ class Main {
         }
 
         if (!areTilesPresent) {
-            liveTile.classList.add('hide');
-            liveGraph.classList.remove('is-10');
-            liveGraph.classList.add('is-full');
+            liveTile.forEach(x => x.classList.add('hide'));
+            liveGraph.forEach(x => x.classList.remove('is-10'));
+            liveGraph.forEach(x => x.classList.add('is-full'));
             charts.forEach(el => el.style.width = '100%');
+            chartsMobile.forEach(el => el.style.width = '100%');
         } else {
-            liveTile.classList.remove('hide');
-            liveGraph.classList.add('is-10');
-            liveGraph.classList.remove('is-full');
+            liveTile.forEach(x => x.classList.remove('hide'));
+            liveGraph.forEach(x => x.classList.add('is-10'));
+            liveGraph.forEach(x => x.classList.remove('is-full'));
             charts.forEach(el => el.style.width = null);
+            chartsMobile.forEach(el => el.style.width = '100%');
         }
     }
 
@@ -193,7 +200,7 @@ class Main {
     }
 
     saveSelectedLiveGraph() {
-        this.createCookie('liveGraphSelected', this.liveChartSelect.selectedIndex, 0);
+        this.createCookie('liveGraphSelected', this.liveChartSelects[0].selectedIndex, 0);
     }
 
     refreshAtMidnightTimer() {
@@ -220,7 +227,7 @@ class Main {
         let expires = '';
         if (days) {
             const date = new Date();
-            date.setTime(date.getTime() + (days*24*3600*1000));
+            date.setTime(date.getTime() + (days * 24 * 3600 * 1000));
             expires = `; expires=${date.toUTCString()}`;
         }
         document.cookie = `${name}=${value}${expires}; path=/`;

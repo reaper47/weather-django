@@ -1,4 +1,4 @@
-.sensor-data-container > p {
+.sensor-data-container>p {
   text-align: center;
 }
 
@@ -12,7 +12,7 @@
   height: 95vh;
 }
 
-#live-tile > article {
+#live-tile>article {
   border-radius: 0;
   padding: 0;
   margin-bottom: 0 !important;
@@ -21,4 +21,71 @@
 
 .fullscreen {
   height: 100vh !important;
+}
+
+#live-tile-mobile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+
+div[id$="mobile__container"] {
+  height: 65vh !important;
+}
+
+aside[id$="mobile"] article {
+  margin-bottom: 0 !important;
+}
+
+aside[id$="mobile"] article>p {
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+aside[id$="mobile"] article p:last-of-type {
+  font-size: 1rem;
+  text-align: left;
+}
+
+#live-mobile-section {
+  padding: 1rem;
+}
+
+#live-graph-mobile {
+  display: block !important;
+}
+
+#live-graph-mobile>article {
+  padding: 2rem 0;
+}
+
+#live-tile-mobile article:last-of-type {
+  grid-column: 1 / 3;
+}
+
+#live-tab-content aside {
+  display: none;
+}
+
+#live-tab-content aside.is-active {
+  display: grid;
+}
+
+#options-graph-mobile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+#options-graph-mobile div:last-of-type {
+  text-align: center;
+}
+
+#options-graph-mobile select {
+  width: 100%;
+}
+
+#cog-grid-mobile {
+  grid-column: 1 / 3;
+  text-align: center;
 }
