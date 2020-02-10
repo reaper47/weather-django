@@ -235,28 +235,28 @@ class LiveCharts {
             'wind': this.__getWindSample(sample)
         };
 
-        this.charts['T'].addDataPoint(date_, vals.T),
-            this.charts['HI'].addDataPoint(date_, vals.HI),
-            this.charts['RH'].addDataPoint(date_, vals.RH),
-            this.charts['W'].addDataPoint(date_, vals.wind),
-            this.charts['Rain'].addDataPoint(date_, vals.rain),
-            this.charts['Light'].addDataPoint(date_, vals.light),
-            this.charts['P'].addDataPoint(date_, vals.P),
-            this.charts['T_HI'].addDataPoint(date_, vals.T, vals.HI),
-            this.charts['T_RH'].addDataPoint(date_, vals.T, vals.RH),
-            this.charts['T_Rain'].addDataPoint(date_, vals.T, vals.rain),
-            this.charts['T_Light'].addDataPoint(date_, vals.T, vals.light),
-            this.charts['T_P'].addDataPoint(date_, vals.T, vals.P),
-            this.charts['HI_RH'].addDataPoint(date_, vals.HI, vals.RH),
-            this.charts['HI_Rain'].addDataPoint(date_, vals.heat, vals.rain),
-            this.charts['HI_Light'].addDataPoint(date_, vals.heat, vals.light),
-            this.charts['HI_P'].addDataPoint(date_, vals.heat, vals.P),
-            this.charts['Rain_RH'].addDataPoint(date_, vals.rain, vals.RH),
-            this.charts['Rain_Light'].addDataPoint(date_, vals.rain, vals.light),
-            this.charts['Light_RH'].addDataPoint(date_, vals.light, vals.RH),
-            this.charts['P_RH'].addDataPoint(date_, vals.P, vals.RH),
-            this.charts['P_Rain'].addDataPoint(date_, vals.P, vals.rain),
-            this.charts['P_Light'].addDataPoint(date_, vals.P, vals.light)
+        this.charts['T'].forEach(x => x.addDataPoint(date_, vals.T));
+        this.charts['HI'].forEach(x => x.addDataPoint(date_, vals.HI));
+        this.charts['RH'].forEach(x => x.addDataPoint(date_, vals.RH));
+        this.charts['W'].forEach(x => x.addDataPoint(date_, vals.wind));
+        this.charts['Rain'].forEach(x => x.addDataPoint(date_, vals.rain));
+        this.charts['Light'].forEach(x => x.addDataPoint(date_, vals.light));
+        this.charts['P'].forEach(x => x.addDataPoint(date_, vals.P));
+        this.charts['T_HI'].forEach(x => x.addDataPoint(date_, vals.T, vals.HI));
+        this.charts['T_RH'].forEach(x => x.addDataPoint(date_, vals.T, vals.RH));
+        this.charts['T_Rain'].forEach(x => x.addDataPoint(date_, vals.T, vals.rain));
+        this.charts['T_Light'].forEach(x => x.addDataPoint(date_, vals.T, vals.light));
+        this.charts['T_P'].forEach(x => x.addDataPoint(date_, vals.T, vals.P));
+        this.charts['HI_RH'].forEach(x => x.addDataPoint(date_, vals.HI, vals.RH));
+        this.charts['HI_Rain'].forEach(x => x.addDataPoint(date_, vals.heat, vals.rain));
+        this.charts['HI_Light'].forEach(x => x.addDataPoint(date_, vals.heat, vals.light));
+        this.charts['HI_P'].forEach(x => x.addDataPoint(date_, vals.heat, vals.P));
+        this.charts['Rain_RH'].forEach(x => x.addDataPoint(date_, vals.rain, vals.RH));
+        this.charts['Rain_Light'].forEach(x => x.addDataPoint(date_, vals.rain, vals.light));
+        this.charts['Light_RH'].forEach(x => x.addDataPoint(date_, vals.light, vals.RH));
+        this.charts['P_RH'].forEach(x => x.addDataPoint(date_, vals.P, vals.RH));
+        this.charts['P_Rain'].forEach(x => x.addDataPoint(date_, vals.P, vals.rain));
+        this.charts['P_Light'].forEach(x => x.addDataPoint(date_, vals.P, vals.light));
 
         this.dates.push(date_);
         this.data.DHT.T_C.push(sample.DHT.T_C);
