@@ -197,9 +197,6 @@ class Averages(models.Model):
 
 
 def get_samples_for_day(date):
-    day_start = f'{date.year}-{date.month}-{date.day} 00:00:00+00:00'
-    day_end = f'{date.year}-{date.month}-{date.day} 23:59:59+00:00'
-
     data = {
         'DHT': {'T_C': [], 'T_F': [], 'HI_C': [], 'HI_F': [], 'RH': []},
         'DS18B20': {'T_C': [], 'T_F': []},
@@ -211,7 +208,7 @@ def get_samples_for_day(date):
         'dates': []
     }
 
-    samples = DHT.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in DHT.objects.all() if x.date.day == date.day]
     data['dates'] = [str(x.date) for x in samples]
     data['DHT']['T_C'] = [x.temperature.celsius for x in samples]
     data['DHT']['T_F'] = [x.temperature.fahrenheit for x in samples]
@@ -219,18 +216,18 @@ def get_samples_for_day(date):
     data['DHT']['HI_F'] = [x.heat_index.fahrenheit for x in samples]
     data['DHT']['RH'] = [x.humidity for x in samples]
 
-    samples = DS18B20.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in DS18B20.objects.all() if x.date.day == date.day]
     data['DS18B20']['T_C'] = [x.temperature.celsius for x in samples]
     data['DS18B20']['T_F'] = [x.temperature.fahrenheit for x in samples]
 
     map_rain = {'N': 0, 'L': 1, 'M': 2, 'H': 3}
-    samples = FC37.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in FC37.objects.all() if x.date.day == date.day]
     data['FC37']['Rain'] = [map_rain[x.rain] for x in samples]
 
-    samples = TEMT6000.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in TEMT6000.objects.all() if x.date.day == date.day]
     data['TEMT6000']['Light'] = [x.lux for x in samples]
 
-    samples = BME280.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in BME280.objects.all() if x.date.day == date.day]
     data['BME280']['T_C'] = [x.temperature.celsius for x in samples]
     data['BME280']['T_F'] = [x.temperature.fahrenheit for x in samples]
     data['BME280']['RH'] = [x.humidity for x in samples]
@@ -238,12 +235,12 @@ def get_samples_for_day(date):
     data['BME280']['P_kPa'] = [x.pressure.kilopascal for x in samples]
     data['BME280']['P_mb'] = [x.pressure.mbar for x in samples]
 
-    samples = Wind.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in Wind.objects.all() if x.date.day == date.day]
     data['Wind']['ms'] = [x.ms for x in samples]
     data['Wind']['kmph'] = [x.kmph for x in samples]
     data['Wind']['mph'] = [x.mph for x in samples]
 
-    samples = Averages.objects.filter(date__range=(day_start, day_end)).all()
+    samples = [x for x in Averages.objects.all() if x.date.day == date.day]
     data['Averages']['T_C'] = [x.temperature.celsius for x in samples]
     data['Averages']['T_F'] = [x.temperature.fahrenheit for x in samples]
 
