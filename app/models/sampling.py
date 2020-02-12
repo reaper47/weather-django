@@ -44,6 +44,7 @@ class HeatIndex(models.Model):
 
     class Meta:
         unique_together = ('celsius', 'fahrenheit',)
+        verbose_name_plural = 'Heat Indexes'
 
     def __eq__(self, other):
         return self.celsius == other.celsius and self.fahrenheit == other.fahrenheit
@@ -80,6 +81,9 @@ class DHT(models.Model):
     humidity = models.DecimalField(max_digits=5, decimal_places=2, null=False)
     date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name_plural = 'DHT'
+
     def __hash__(self):
         return hash(self.date)
 
@@ -102,6 +106,9 @@ class DS18B20(models.Model):
     temperature = models.ForeignKey('Temperature', on_delete=models.DO_NOTHING)
     date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name_plural = 'DS18B20'
+
     def __eq__(self, other):
         return self.temperature == other.temperature and str(self.date) == str(other.date)
 
@@ -118,6 +125,9 @@ class FC37(models.Model):
     rain = models.CharField(max_length=1, null=False)
     date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name_plural = 'FC37'
+
     def __eq__(self, other):
         return self.rain == other.rain and str(self.date) == str(other.date)
 
@@ -133,6 +143,9 @@ class FC37(models.Model):
 class TEMT6000(models.Model):
     lux = models.PositiveIntegerField(null=False)
     date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = 'TEMT6000'
 
     def __eq__(self, other):
         return self.lux == other.lux and str(self.date) == str(other.date)
@@ -151,6 +164,10 @@ class BME280(models.Model):
     humidity = models.DecimalField(max_digits=5, decimal_places=2, null=False)
     pressure = models.ForeignKey('Pressure', on_delete=models.DO_NOTHING)
     date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = 'BME280'
+
 
     def __eq__(self, other):
         return (self.temperature == other.temperature and
@@ -195,6 +212,9 @@ class Averages(models.Model):
     temperature = models.ForeignKey('Temperature', on_delete=models.DO_NOTHING)
     date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        verbose_name_plural = 'Averages'
+
 
 def get_samples_for_day(date):
     data = {
@@ -208,7 +228,7 @@ def get_samples_for_day(date):
         'dates': []
     }
 
-    samples = [x for x in DHT.objects.all() if x.date.day == date.day]
+    samples = DHT.objects.filter(date__day=date.day).all()
     data['dates'] = [str(x.date) for x in samples]
     data['DHT']['T_C'] = [x.temperature.celsius for x in samples]
     data['DHT']['T_F'] = [x.temperature.fahrenheit for x in samples]
@@ -216,7 +236,7 @@ def get_samples_for_day(date):
     data['DHT']['HI_F'] = [x.heat_index.fahrenheit for x in samples]
     data['DHT']['RH'] = [x.humidity for x in samples]
 
-    samples = [x for x in DS18B20.objects.all() if x.date.day == date.day]
+    samples = DS18B20.objects.filter(date__day=date.day).all()
     data['DS18B20']['T_C'] = [x.temperature.celsius for x in samples]
     data['DS18B20']['T_F'] = [x.temperature.fahrenheit for x in samples]
 
@@ -224,10 +244,10 @@ def get_samples_for_day(date):
     samples = [x for x in FC37.objects.all() if x.date.day == date.day]
     data['FC37']['Rain'] = [map_rain[x.rain] for x in samples]
 
-    samples = [x for x in TEMT6000.objects.all() if x.date.day == date.day]
+    samples = TEMT6000.objects.filter(date__day=date.day).all()
     data['TEMT6000']['Light'] = [x.lux for x in samples]
 
-    samples = [x for x in BME280.objects.all() if x.date.day == date.day]
+    samples = BME280.objects.filter(date__day=date.day).all()
     data['BME280']['T_C'] = [x.temperature.celsius for x in samples]
     data['BME280']['T_F'] = [x.temperature.fahrenheit for x in samples]
     data['BME280']['RH'] = [x.humidity for x in samples]
@@ -235,12 +255,12 @@ def get_samples_for_day(date):
     data['BME280']['P_kPa'] = [x.pressure.kilopascal for x in samples]
     data['BME280']['P_mb'] = [x.pressure.mbar for x in samples]
 
-    samples = [x for x in Wind.objects.all() if x.date.day == date.day]
+    samples = Wind.objects.filter(date__day=date.day).all()
     data['Wind']['ms'] = [x.ms for x in samples]
     data['Wind']['kmph'] = [x.kmph for x in samples]
     data['Wind']['mph'] = [x.mph for x in samples]
 
-    samples = [x for x in Averages.objects.all() if x.date.day == date.day]
+    samples = Averages.objects.filter(date__day=date.day).all()
     data['Averages']['T_C'] = [x.temperature.celsius for x in samples]
     data['Averages']['T_F'] = [x.temperature.fahrenheit for x in samples]
 
@@ -257,7 +277,7 @@ def add_new_sample(sample: Sample):
     t = find_temperature(Temperature, sample.ds18b20.t_c, sample.ds18b20.t_f)
     DS18B20.objects.create(temperature=t, date=sample.date)
 
-    FC37(rain=sample.fc37.rain, date=sample.date)
+    FC37.objects.create(rain=sample.fc37.rain, date=sample.date)
     TEMT6000.objects.create(lux=sample.temt6000.lux, date=sample.date)
 
     t = find_temperature(Temperature, sample.bme280.t_c, sample.bme280.t_f)
