@@ -80,7 +80,11 @@
   </main>
   <script defer src="{% static 'bundles/main.js' %}"></script>
   <script>
-    var liveSocket = new WebSocket(`ws://${window.location.host}/ws/app/`);
+    let wsProtocol = 'ws';
+    if (location.protocol === 'https:')
+      wsProtocol = 'wss';
+
+    var liveSocket = new WebSocket(`${wsProtocol}://${window.location.host}/ws/app/`);
     liveSocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.type === 'update_live_event')
