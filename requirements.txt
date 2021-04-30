@@ -12,7 +12,7 @@ chardet==3.0.4
 constantly==15.1.0
 cryptography==3.2
 daphne==2.4.1
-Django==3.1.6
+Django==3.1.8
 django-channels==0.7.0
 django-webpack-loader==0.6.0
 entrypoints==0.3
